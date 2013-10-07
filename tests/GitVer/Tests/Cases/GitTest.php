@@ -88,7 +88,7 @@ class GitTest extends \PHPUnit_Framework_TestCase
     public function tearDown()
     {
         $this->cleanupTempDirectory($this->tmpwc);
-        foreach($this->tmps as $d) {
+        foreach ($this->tmps as $d) {
             $this->cleanupTempDirectory($d);
         }
     }
@@ -98,11 +98,11 @@ class GitTest extends \PHPUnit_Framework_TestCase
      *
      * @param String $dir Directory to clean
      *
-     * @returns null
+     * @return null
      */
     protected function cleanupTempDirectory($dir)
     {
-        if(in_array($dir, $this->tmps)) {
+        if (in_array($dir, $this->tmps)) {
             ` rm -rf $dir`;
             unset($this->tmps[$dir]);
         }
@@ -123,9 +123,9 @@ class GitTest extends \PHPUnit_Framework_TestCase
     /**
      * Commits random content into a repository to ensure it's not empty
      *
-     * @param $wc  Working Copy dir
+     * @param string $wc Working Copy dir
      *
-     * @returns null
+     * @return null
      */
     protected function addACommitTo($wc)
     {
@@ -135,10 +135,10 @@ class GitTest extends \PHPUnit_Framework_TestCase
     /**
      * Tags HEAD as $tag in the $wc working copy provided
      *
-     * @param string Working Copy
-     * @param string Tag name
+     * @param string $wc  Working Copy
+     * @param string $tag Tag name
      *
-     * @returns null
+     * @return null
      */
     protected function tagACommitIn($wc, $tag)
     {
@@ -154,7 +154,8 @@ class GitTest extends \PHPUnit_Framework_TestCase
      */
     protected function createTempDirectory()
     {
-        $tmp = sys_get_temp_dir() . DIRECTORY_SEPARATOR . "gitvertest" . mt_rand(0, 1000);
+        $ds = DIRECTORY_SEPARATOR;
+        $tmp = sys_get_temp_dir() . $ds . "gitvertest" . mt_rand(0, 1000);
         if (file_exists($tmp) && is_dir($tmp)) {
             `rm $tmp -r`;
         }
@@ -208,9 +209,10 @@ class GitTest extends \PHPUnit_Framework_TestCase
     {
         $git = new Git();
         $expects = $this->root;
-
-        if ('fatal' === substr(`cd $expects && git rev-parse --show-toplevel 2>&1`, 0, 5)) {
-            $this->markTestSkipped("Test is not running from a git working directory.");
+        $cmd = "cd $expects && git rev-parse --show-toplevel 2>&1";
+        if ('fatal' === substr(`$cmd`, 0, 5)) {
+            $reason = "Test is not running from a git working directory.";
+            $this->markTestSkipped($reasons);
         }
 
         $this->assertEquals($expects, $git->root());
@@ -252,7 +254,7 @@ class GitTest extends \PHPUnit_Framework_TestCase
      *  - valid tagged version
      * Note: assumes default prefix of "v"
      *
-     * @returns null
+     * @return null
      */
     public function testversionFromWorkingCopyState()
     {
@@ -275,7 +277,7 @@ class GitTest extends \PHPUnit_Framework_TestCase
     /**
      * Tests versions for a non-default prefix
      *
-     * @returns null
+     * @return null
      */
     public function testversionWithNonDefaultTagPrefix()
     {
