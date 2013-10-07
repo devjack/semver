@@ -5,4 +5,13 @@ php:
  - 5.3
 before_script:
  - composer install
-script: "phpunit"
+ - pyrus install pear/PHP_CodeSniffer
+
+script:
+ - mkdir -p build/logs
+ - phpcs --standard=PSR2 src/
+ - phpcs --standard=PSR2 tests/
+ - phpunit --coverage-clover build/logs/clover.xml
+
+after_script:
+ - php vendor/bin/coveralls
