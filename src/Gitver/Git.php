@@ -30,6 +30,8 @@ namespace Gitver;
 class Git
 {
     /**
+     * Root of the git repository.
+     *
      * @var string
      */
     protected $root = "";
@@ -44,24 +46,24 @@ class Git
     /**
      * Prefix for tags
      *
-     * @var string $tagPrefix
+     * @var string $tagPrefix Prefix for a tag match
      */
     protected $tagPrefix = "v";
 
     /**
      * Matching regex for a version tag
      *
-     * @var string $tagMatch
+     * @var string $tagMatch Regex for git describe --match
      */
-    protected $tagMatch='v[0-9]\.[0-9]\.[0-9]*';
+    protected $tagMatch = 'v[0-9]\.[0-9]\.[0-9]*';
 
     /**
      * Git class constructor
      *
-     * @param null $root location of the .git directory
+     * @param null $root Location of the .git directory
      */
 
-    public function __construct($root = null, $tagPrefix="v")
+    public function __construct($root = null, $tagPrefix = "v")
     {
         $this->root = realpath($root);
         if ($this->exists($root . DIRECTORY_SEPARATOR . ".git")) {
@@ -71,15 +73,15 @@ class Git
             $root = trim(`git rev-parse --show-toplevel 2>&1`);
             if ('fatal' !== substr($root, 0, 5)) {
                 $this->wc = true;
-                $this->root = $root;;
+                $this->root = $root;
             } else {
                 $this->wc = false;
                 $this->root = __DIR__;
             }
         }
 
-        $this->tagPrefix=$tagPrefix;
-        $this->tagMatch = preg_quote($tagPrefix).'[0-9]\.[0-9]\.[0-9]*';
+        $this->tagPrefix = $tagPrefix;
+        $this->tagMatch = preg_quote($tagPrefix) . '[0-9]\.[0-9]\.[0-9]*';
     }
 
     /**
@@ -105,7 +107,7 @@ class Git
     {
         `cd $this->root`;
         $describe = `git describe 2>&1`;
-        if(strstr($describe, "No names found")) {
+        if (strstr($describe, "No names found")) {
             return "";
         }
         return $describe;
@@ -141,8 +143,9 @@ class Git
     public function version()
     {
 
-        $describe = `cd $this->root && git describe --long --tags --match $this->tagMatch 2>&1`;
-        if(strstr($describe, 'No names found')) {
+        $gdescribe = "git describe --long --tags --match $this->tagMatch 2>&1";
+        $describe = `cd $this->root  && $gdescribe`;
+        if (strstr($describe, 'No names found')) {
             // Nothing has been tagged yet
             return $this->noVersion();
         }
@@ -150,7 +153,13 @@ class Git
         return $describe;
     }
 
-    protected function noVersion() {
+    /**
+     * If no tagged version exists, calculate one
+     *
+     * @return string Version
+     */
+    protected function noVersion()
+    {
         // Assumes nothing has been tagged
         $head = `cd $this->root && git show HEAD 2>&1`;
         if (strstr($head, 'unknown revision or path')) {
@@ -161,4 +170,3 @@ class Git
         }
     }
 }
-

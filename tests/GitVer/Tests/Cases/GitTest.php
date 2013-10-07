@@ -53,6 +53,13 @@ class GitTest extends \PHPUnit_Framework_TestCase
     protected $tmpwc = "";
 
     /**
+     * List of temp locations created
+     *
+     * @var array $tmps
+     */
+    protected $tmps = array();
+
+    /**
      * Setup the test case
      *
      * @return null
@@ -81,6 +88,9 @@ class GitTest extends \PHPUnit_Framework_TestCase
     public function tearDown()
     {
         $this->cleanupTempDirectory($this->tmpwc);
+        foreach($this->tmps as $d) {
+            $this->cleanupTempDirectory($d);
+        }
     }
 
     /**
@@ -92,7 +102,10 @@ class GitTest extends \PHPUnit_Framework_TestCase
      */
     protected function cleanupTempDirectory($dir)
     {
-        ` rm -rf $dir`;
+        if(in_array($dir, $this->tmps)) {
+            ` rm -rf $dir`;
+            unset($this->tmps[$dir]);
+        }
     }
 
     /**
@@ -147,6 +160,7 @@ class GitTest extends \PHPUnit_Framework_TestCase
         }
         mkdir($tmp);
         if (is_dir($tmp)) {
+            $this->tmps[] = $tmp;
             return $tmp;
         }
         throw new \AccessDeniedException("Could not create tmp directory $tmp");
