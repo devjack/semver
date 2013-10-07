@@ -9,10 +9,10 @@ before_script:
 
 script:
  - mkdir -p build/logs
- - phpcs --standard=PSR2 src/
- - phpcs --standard=PSR2 tests/
- - phpunit
- - phpunit --coverage-clover build/logs/clover.xml
+ - vendor/bin/phpcs --standard=PSR2 src/
+ - vendor/bin/phpcs --standard=PSR2 tests/
+ - vendor/bin/phpunit
+ - vendor/bin/phpunit --coverage-clover build/logs/clover.xml
 
 after_script:
  - vendor/bin/coveralls
