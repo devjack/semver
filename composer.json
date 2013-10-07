@@ -1,5 +1,5 @@
 {
-    "name": "php-gitver",
+    "name": "sydnerdrage/php-gitver",
     "descripton": "Simply library to access and parse a git repository with semantically versioned tags",
     "author": "Jack Skinner <sydnerdrage@gmail.com>",
     "require-dev": {
