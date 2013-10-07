@@ -236,14 +236,18 @@ class GitTest extends \PHPUnit_Framework_TestCase
 
 
     /**
-     * Tests git git describe on a dirty/uncommitted repository
+     * Tests git git describe on a tagless repository
      *
      * @return null;
      */
-    public function testDirtyDescribe()
+    public function testTaglessDescribe()
     {
-        $wc = $this->tmpwc;
+        $wc = $this->createTempDirectory();
+        $this->gitInit($wc);
         $git = new Git($wc);
+
+        $this->addACommitTo($wc);
+        echo $git->describe();
         $this->assertEmpty($git->describe());
     }
 

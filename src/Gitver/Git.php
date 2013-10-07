@@ -105,8 +105,7 @@ class Git
 
     public function describe()
     {
-        `cd $this->root`;
-        $describe = `git describe 2>&1`;
+        $describe = `cd $this->root && git describe 2>&1`;
         if (strstr($describe, "No names found")) {
             return "";
         }
