@@ -44,7 +44,7 @@ class Git
     protected $wc = false;
 
     /**
-     * Prefix for tags
+     * Prefix for tagsphpcs
      *
      * @var string $tagPrefix Prefix for a tag match
      */
@@ -60,9 +60,9 @@ class Git
     /**
      * Git class constructor
      *
-     * @param null $root Location of the .git directory
+     * @param null   $root      Location of the .git directory
+     * @param string $tagPrefix Prefix for git tag matching
      */
-
     public function __construct($root = null, $tagPrefix = "v")
     {
         $this->root = realpath($root);

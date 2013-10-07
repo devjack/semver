@@ -11,6 +11,7 @@ script:
  - mkdir -p build/logs
  - phpcs --standard=PSR2 src/
  - phpcs --standard=PSR2 tests/
+ - phpunit
  - phpunit --coverage-clover build/logs/clover.xml
 
 after_script:
