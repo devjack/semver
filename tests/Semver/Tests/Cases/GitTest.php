@@ -1,31 +1,31 @@
 <?php
 /**
- * GitVer\Tests\Git class
+ * Semver\Tests\Git class
  *
  * PHP version 5.3
  *
- * @category GitVer
- * @package  GitVer
+ * @category Semver
+ * @package  Semver
  * @author   Jack Skinner <sydnerdrage@gmail.com>
  * @license  MIT http://opensource.org/licenses/MIT
- * @link     http://www.sydnerdrage.com/Gitver
+ * @link     http://www.sydnerdrage.com/semver
  *
  */
 
-namespace Gitver\Tests\Cases;
+namespace Semver\Tests\Cases;
 
-use Gitver\Git;
+use Semver\Git;
 
 /**
- * Tests for the \Gitver\Git
+ * Tests for the \Semver\Git
  *
  * Represents a given version
  *
- * @category GitVer
- * @package  GitVer
+ * @category Semver
+ * @package  Semver
  * @author   Jack Skinner <sydnerdrage@gmail.com>
  * @license  MIT http://opensource.org/licenses/MIT
- * @link     http://www.sydnerdrage.com/Gitver
+ * @link     http://www.sydnerdrage.com/semver
  */
 
 class GitTest extends \PHPUnit_Framework_TestCase
@@ -155,7 +155,7 @@ class GitTest extends \PHPUnit_Framework_TestCase
     protected function createTempDirectory()
     {
         $ds = DIRECTORY_SEPARATOR;
-        $tmp = sys_get_temp_dir() . $ds . "gitvertest" . mt_rand(0, 1000);
+        $tmp = sys_get_temp_dir() . $ds . "Semvertest" . mt_rand(0, 1000);
         if (file_exists($tmp) && is_dir($tmp)) {
             `rm $tmp -r`;
         }
@@ -227,7 +227,7 @@ class GitTest extends \PHPUnit_Framework_TestCase
     public function testDefaultDirIsNotAWorkingCopy()
     {
         $git = new Git();
-        $expects = $this->root . "/src/Gitver";
+        $expects = $this->root . "/src/Semver";
         if ('fatal' !== substr(`git rev-parse --show-toplevel 2>&1`, 0, 5)) {
             $this->markTestSkipped("Test is running from a git working directory.");
         }

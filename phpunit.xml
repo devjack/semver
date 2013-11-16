@@ -2,8 +2,8 @@
 
 <phpunit bootstrap="./vendor/autoload.php">
     <testsuites>
-        <testsuite name="Gitver Test Suite">
-            <directory>./tests/Gitver/Tests</directory>
+        <testsuite name="Semver Test Suite">
+            <directory>./tests/Semver/Tests</directory>
         </testsuite>
     </testsuites>
 </phpunit>

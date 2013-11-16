@@ -1,6 +1,6 @@
 {
-    "name": "sydnerdrage/php-gitver",
-    "descripton": "Simply library to access and parse a git repository with semantically versioned tags",
+    "name": "sydnerdrage/semver",
+    "descripton": "Semantic versioning tool and library for PHP projects",
     "author": "Jack Skinner <sydnerdrage@gmail.com>",
     "require-dev": {
         "phpunit/phpunit": "3.7.*",
@@ -12,8 +12,8 @@
     },
     "autoload": {
         "psr-0": {
-            "Gitver\\": "src/",
-            "Gitver\\Tests": "tests/"
+            "Semver\\": "src/",
+            "Semver\\Tests": "tests/"
         }
     }
 }
