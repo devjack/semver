@@ -11,14 +11,14 @@
  * @license  MIT http://opensource.org/licenses/MIT
  * @link     http://www.sydnerdrage.com/semver
  *
- */ 
+ */
 
 namespace Semver\Strategy;
 
  /**
  * StrategyInterface class
  *
- * Represents a given version
+ * Represents a DVCS strategy
  *
  * @category Semver
  * @package  semver
@@ -27,6 +27,15 @@ namespace Semver\Strategy;
  * @link     http://www.sydnerdrage.com/semver
  */
 
-interface StrategyInterface {
+interface StrategyInterface
+{
+    /**
+     * @return mixed Return the latest version in the repository
+     */
+    public function latestVersion();
 
-} 
+    /**
+     * @return mixed Return a list of all versions in the repository
+     */
+    public function listVersions();
+}
