@@ -72,10 +72,11 @@ class GitTest extends \PHPUnit_Framework_TestCase
 
         $this->wc = ('fatal' === substr(`git rev-parse --show-toplevel 2>&1`, 0, 5));
 
-        // Create a temporary git repository to test with
+        /*// Create a temporary git repository to test with
         $temp = $this->createTempDirectory();
         $this->gitInit($temp);
         $this->tmpwc = $temp;
+        */
 
         $this->root = realpath(__DIR__ . "../../../../../");
     }
@@ -87,7 +88,7 @@ class GitTest extends \PHPUnit_Framework_TestCase
      */
     public function tearDown()
     {
-        $this->cleanupTempDirectory($this->tmpwc);
+        //$this->cleanupTempDirectory($this->tmpwc);
         foreach ($this->tmps as $d) {
             $this->cleanupTempDirectory($d);
         }
@@ -135,7 +136,7 @@ class GitTest extends \PHPUnit_Framework_TestCase
     /**
      * Tags HEAD as $tag in the $wc working copy provided
      *
-     * @param string $wc  Working Copy
+     * @param string $wc Working Copy
      * @param string $tag Tag name
      *
      * @return null
@@ -175,12 +176,12 @@ class GitTest extends \PHPUnit_Framework_TestCase
 
     public function testDirIsWorkingCopy()
     {
-
-        $dir = $this->tmpwc;
+        $temp = $this->createTempDirectory();
+        $dir = realpath($temp);
 
         $git = new Git($dir);
         $expects = realpath($dir);
-        $this->assertEquals($expects, $git->root());
+        $this->assertEquals($dir, $git->root());
         $this->assertEquals(true, $git->isWorkingCopy());
     }
 
@@ -208,7 +209,7 @@ class GitTest extends \PHPUnit_Framework_TestCase
     public function testDefaultDirIsAWorkingCopy()
     {
         $git = new Git();
-        $expects = $this->root;
+        $expects = realpath($this->root);
         $cmd = "cd $expects && git rev-parse --show-toplevel 2>&1";
         if ('fatal' === substr(`$cmd`, 0, 5)) {
             $reason = "Test is not running from a git working directory.";

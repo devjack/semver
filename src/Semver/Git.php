@@ -60,7 +60,7 @@ class Git
     /**
      * Git class constructor
      *
-     * @param null   $root      Location of the .git directory
+     * @param null $root Location of the .git directory
      * @param string $tagPrefix Prefix for git tag matching
      */
     public function __construct($root = null, $tagPrefix = "v")
@@ -73,7 +73,7 @@ class Git
             $root = trim(`git rev-parse --show-toplevel 2>&1`);
             if ('fatal' !== substr($root, 0, 5)) {
                 $this->wc = true;
-                $this->root = $root;
+                $this->root = realpath($root);
             } else {
                 $this->wc = false;
                 $this->root = __DIR__;
