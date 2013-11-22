@@ -68,15 +68,16 @@ class Git
         $this->root = realpath($root);
         if ($this->exists($root . DIRECTORY_SEPARATOR . ".git")) {
             $this->wc = true;
+            return; // Return if the defaults 'just
         }
         if (is_null($root)) {
             $root = trim(`git rev-parse --show-toplevel 2>&1`);
             if ('fatal' !== substr($root, 0, 5)) {
                 $this->wc = true;
-                $this->root = realpath($root);
+                $this->root = realpath($root); //override the root with the real root.
             } else {
                 $this->wc = false;
-                $this->root = __DIR__;
+                $this->root = __DIR__; // Default to the current directory.
             }
         }
 
